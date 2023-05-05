@@ -1,8 +1,8 @@
-package service;
+package com.challenge.PizzaParlor.service;
 
-import model.Order;
+import com.challenge.PizzaParlor.model.order.Order;
 import org.springframework.stereotype.Service;
-import repository.OrderRepository;
+import com.challenge.PizzaParlor.repository.OrderRepository;
 
 import java.util.List;
 
@@ -21,5 +21,9 @@ public class OrderService {
 
     public Order getOrderById(Integer id){
         return orderRepository.findById(id).orElse(null);
+    }
+
+    public void submitNewOrder(Order order) {
+        orderRepository.save(order);
     }
 }

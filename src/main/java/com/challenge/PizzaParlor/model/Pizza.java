@@ -1,4 +1,4 @@
-package model;
+package com.challenge.PizzaParlor.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,12 +13,10 @@ public class Pizza {
 
     @Id
     @Column(name = "pizza_id")
-    @OneToMany(fetch = FetchType.LAZY)
     private String id;
 
     @Column(name = "pizza_type_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private String pizzaType;
+    private String pizzaTypeId;
 
     @Column(name = "size")
     private String size;

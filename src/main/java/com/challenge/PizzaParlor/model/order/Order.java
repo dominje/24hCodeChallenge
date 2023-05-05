@@ -1,4 +1,4 @@
-package model;
+package com.challenge.PizzaParlor.model.order;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,11 +10,11 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-public class Order {
+@Table(name = "`ORDER`")
+public class Order{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @OneToMany(fetch = FetchType.LAZY)
     @Column(name = "order_id")
     private Integer id;
 

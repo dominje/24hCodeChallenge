@@ -1,9 +1,8 @@
-package service;
+package com.challenge.PizzaParlor.service;
 
-import model.Order;
-import model.OrderDetails;
+import com.challenge.PizzaParlor.model.OrderDetails;
 import org.springframework.stereotype.Service;
-import repository.OrderDetailsRepository;
+import com.challenge.PizzaParlor.repository.OrderDetailsRepository;
 
 import java.util.List;
 
