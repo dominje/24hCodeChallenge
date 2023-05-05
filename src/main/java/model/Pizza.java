@@ -18,7 +18,7 @@ public class Pizza {
 
     @Column(name = "pizza_type_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private PizzaType pizzaType;
+    private String pizzaType;
 
     @Column(name = "size")
     private String size;
