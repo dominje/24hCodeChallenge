@@ -9,7 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import com.challenge.PizzaParlor.service.OrderService;
 
-import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/order")
@@ -19,7 +20,7 @@ public class OrderController {
     private OrderService orderService;
     private OrderMapper orderMapper;
 
-    @PostMapping
+    @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
     public OrderResponse submitNewOrder(@RequestBody OrderRequest orderRequest) {
         System.out.println(orderRequest.getDate());
@@ -27,7 +28,12 @@ public class OrderController {
         orderMapper = new OrderMapper();
         Order order = orderMapper.toEntity(orderRequest);
         return orderMapper.toResponse(orderService.submitNewOrder(order));
+    }
 
+    @PostMapping("/getAll")
+    public List<OrderResponse> getAllOrders(){
+        List<Order> orderList = orderService.getAllOrders();
+        return orderList.stream().map(order -> orderMapper.toResponse(order)).collect(Collectors.toList());
     }
 
 }
