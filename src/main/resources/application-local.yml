@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:h2:file:D:\Files\Ehrlich\24 Hour Code Challenge
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  flyway:
+    enabled: true
+  h2:
+    console:
+      enabled: true
