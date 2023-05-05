@@ -18,11 +18,11 @@ public class OrderDetails {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @Column(name = "order_id")
-    private List<Order> order;
+    private Order order;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @Column(name = "pizza_id")
-    private List<Pizza> pizza;
+    private Pizza pizza;
 
     @Column(name = "quantity")
     private Integer quantity;
