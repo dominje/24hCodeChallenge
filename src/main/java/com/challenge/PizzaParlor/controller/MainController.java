@@ -1,9 +1,10 @@
 package com.challenge.PizzaParlor.controller;
 
 import com.challenge.PizzaParlor.model.orderdetails.OrderDetails;
-import com.challenge.PizzaParlor.model.Pizza;
-import com.challenge.PizzaParlor.model.PizzaType;
+import com.challenge.PizzaParlor.model.pizza.Pizza;
+import com.challenge.PizzaParlor.model.pizzatype.PizzaType;
 import com.challenge.PizzaParlor.model.order.Order;
+import com.challenge.PizzaParlor.service.OrderDetailsService;
 import com.challenge.PizzaParlor.service.OrderService;
 import com.challenge.PizzaParlor.utils.UtilsClass;
 import com.opencsv.bean.CsvToBean;
@@ -27,7 +28,9 @@ import java.util.List;
 public class MainController {
 
     @Autowired
-    private OrderService service;
+    private OrderService orderService;
+    @Autowired
+    private OrderDetailsService orderDetailsService;
     private UtilsClass utils;
 
     @RequestMapping(method = RequestMethod.GET)
@@ -42,26 +45,28 @@ public class MainController {
 
         if(utils.hasCSVFormat(multipartFile)) {
            try (Reader reader = new BufferedReader(new InputStreamReader(multipartFile.getInputStream()))) {
-               CsvToBean<Order> csvToBean = null;
-               Object objClass = null;
+               CsvToBean<?> csvToBean = null;
+               List<Order> orderList = null;
+               List<OrderDetails> orderDetailsList = null;
+               List<Pizza> pizzaList = null;
+               List<PizzaType> pizzaTypeList = null;
                if(multipartFile.getOriginalFilename().equals("orders.csv")) {
-                   objClass = Order.class;
+                   csvToBean = (CsvToBean<Order>) convertToBean(reader, Order.class);
+                   orderList = (List<Order>) csvToBean.parse();
+                   orderList.stream().forEach(order -> orderService.submitNewOrder(order));
                }else if(multipartFile.getOriginalFilename().equals("order_details.csv")){
-                   objClass = OrderDetails.class;
+                   csvToBean = convertToBean(reader, OrderDetails.class);
+                   orderDetailsList = (List<OrderDetails>) csvToBean.parse();
+                   orderDetailsList.stream().forEach(orderDetails -> orderDetailsService.addOrderDetails(orderDetails));
                }else if(multipartFile.getOriginalFilename().equals("pizza.csv")){
-                   objClass = Pizza.class;
+                   csvToBean = convertToBean(reader, Pizza.class);
+                   pizzaList = (List<Pizza>) csvToBean.parse();
                }else if(multipartFile.getOriginalFilename().equals("pizza_type.csv")){
-                   objClass = PizzaType.class;
+                   csvToBean = convertToBean(reader, PizzaType.class);
+                   pizzaTypeList = (List<PizzaType>) csvToBean.parse();
                }else{
                    return "upload-failed";
                }
-               csvToBean = new CsvToBeanBuilder(reader)
-                       .withType((Class) objClass)
-                       .withIgnoreLeadingWhiteSpace(true)
-                       .build();
-
-                List<Order> orderList = csvToBean.parse();
-                orderList.stream().forEach(order -> service.submitNewOrder(order));
                return "upload-success";
             } catch (Exception ex) {
                 return "upload-failed";
@@ -71,5 +76,14 @@ public class MainController {
             return "upload-failed";
         }
 
+    }
+
+    public CsvToBean<?> convertToBean(Reader reader, Class objClass) {
+        CsvToBean<?> csvToBean;
+        csvToBean = new CsvToBeanBuilder(reader)
+                .withType(objClass)
+                .withIgnoreLeadingWhiteSpace(true)
+                .build();
+        return csvToBean;
     }
 }
