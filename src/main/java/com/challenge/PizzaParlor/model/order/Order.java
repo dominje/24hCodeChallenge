@@ -1,5 +1,7 @@
 package com.challenge.PizzaParlor.model.order;
 
+import com.opencsv.bean.CsvBindByName;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,25 +9,27 @@ import javax.persistence.*;
 public class Order{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
-    private Integer id;
+    @CsvBindByName
+    private Integer order_id;
 
     @Column(name = "date")
+    @CsvBindByName
     private String date;
 
     @Column(name = "time")
+    @CsvBindByName
     private String time;
 
     public Order() {
     }
 
     public Integer getId() {
-        return id;
+        return order_id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.order_id = id;
     }
 
     public String getDate() {

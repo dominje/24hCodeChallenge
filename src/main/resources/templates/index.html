@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Upload CSV File</title>
+
+    <!--Bootstrap 4-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<div th:if="${message}">
+    <h2 th:text="${message}"/>
+</div>
+
+<div>
+    <form method="POST" enctype="multipart/form-data" action="/upload">
+        <table>
+            <tr><td>File to upload:</td><td><input type="file" name="file" accept=".csv" /></td></tr>
+            <tr><td></td><td><button type="submit" class="btn btn-primary">Upload</button></td></tr>
+        </table>
+    </form>
+</div>
+
+<div>
+    <div th:if="${success}">
+        <h2 th:text="${success}"/>
+    </div>
+    <div th:if="${fail}">
+        <h2 th:text="${fail}"/>
+    </div>
+</div>
+
+</body>
+</html>

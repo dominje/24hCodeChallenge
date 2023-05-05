@@ -1,6 +1,7 @@
 package com.challenge.PizzaParlor.service;
 
 import com.challenge.PizzaParlor.model.order.Order;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.challenge.PizzaParlor.repository.OrderRepository;
 
@@ -9,7 +10,7 @@ import java.util.List;
 @Service
 public class OrderService {
 
-    private final OrderRepository orderRepository;
+    private OrderRepository orderRepository;
 
     public OrderService(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
