@@ -20,16 +20,6 @@ public class OrderController {
     private OrderService orderService;
     private OrderMapper orderMapper;
 
-    @PostMapping("/new")
-    @ResponseStatus(HttpStatus.CREATED)
-    public OrderResponse submitNewOrder(@RequestBody OrderRequest orderRequest) {
-        System.out.println(orderRequest.getDate());
-        System.out.println(orderRequest.getTime());
-        orderMapper = new OrderMapper();
-        Order order = orderMapper.toEntity(orderRequest);
-        return orderMapper.toResponse(orderService.submitNewOrder(order));
-    }
-
     @PostMapping("/getAll")
     public List<OrderResponse> getAllOrders(){
         List<Order> orderList = orderService.getAllOrders();
