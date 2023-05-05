@@ -1,5 +1,8 @@
 package com.challenge.PizzaParlor.controller;
 
+import com.challenge.PizzaParlor.model.OrderDetails;
+import com.challenge.PizzaParlor.model.Pizza;
+import com.challenge.PizzaParlor.model.PizzaType;
 import com.challenge.PizzaParlor.model.order.Order;
 import com.challenge.PizzaParlor.service.OrderService;
 import com.challenge.PizzaParlor.utils.UtilsClass;
@@ -13,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -36,15 +38,28 @@ public class MainController {
     }
 
     @PostMapping("/upload")
-    public String  handleFileUpload(@RequestParam("file") MultipartFile multipartFile,
-                                    RedirectAttributes redirectAttributes) throws Exception {
+    public String handleFileUpload(@RequestParam("file") MultipartFile multipartFile) {
 
         if(utils.hasCSVFormat(multipartFile)) {
            try (Reader reader = new BufferedReader(new InputStreamReader(multipartFile.getInputStream()))) {
-                CsvToBean<Order> csvToBean = new CsvToBeanBuilder(reader)
-                        .withType(Order.class)
-                        .withIgnoreLeadingWhiteSpace(true)
-                        .build();
+               CsvToBean<Order> csvToBean = null;
+               Object objClass = null;
+               if(multipartFile.getOriginalFilename().equals("orders.csv")) {
+                   objClass = Order.class;
+               }else if(multipartFile.getOriginalFilename().equals("order_details.csv")){
+                   objClass = OrderDetails.class;
+               }else if(multipartFile.getOriginalFilename().equals("pizza.csv")){
+                   objClass = Pizza.class;
+               }else if(multipartFile.getOriginalFilename().equals("pizza_type.csv")){
+                   objClass = PizzaType.class;
+               }else{
+                   return "upload-failed";
+               }
+               csvToBean = new CsvToBeanBuilder(reader)
+                       .withType((Class) objClass)
+                       .withIgnoreLeadingWhiteSpace(true)
+                       .build();
+
                 List<Order> orderList = csvToBean.parse();
                 orderList.stream().forEach(order -> service.submitNewOrder(order));
                return "upload-success";
