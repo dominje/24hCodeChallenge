@@ -1,6 +1,6 @@
 package com.challenge.PizzaParlor.service;
 
-import com.challenge.PizzaParlor.model.OrderDetails;
+import com.challenge.PizzaParlor.model.orderdetails.OrderDetails;
 import org.springframework.stereotype.Service;
 import com.challenge.PizzaParlor.repository.OrderDetailsRepository;
 

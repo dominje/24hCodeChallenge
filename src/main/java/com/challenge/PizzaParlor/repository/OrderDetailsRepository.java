@@ -1,6 +1,6 @@
 package com.challenge.PizzaParlor.repository;
 
-import com.challenge.PizzaParlor.model.OrderDetails;
+import com.challenge.PizzaParlor.model.orderdetails.OrderDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

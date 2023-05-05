@@ -1,6 +1,6 @@
 package com.challenge.PizzaParlor.controller;
 
-import com.challenge.PizzaParlor.model.OrderDetails;
+import com.challenge.PizzaParlor.model.orderdetails.OrderDetails;
 import com.challenge.PizzaParlor.model.Pizza;
 import com.challenge.PizzaParlor.model.PizzaType;
 import com.challenge.PizzaParlor.model.order.Order;
