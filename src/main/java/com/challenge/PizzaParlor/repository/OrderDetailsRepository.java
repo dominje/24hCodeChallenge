@@ -10,4 +10,5 @@ import java.util.List;
 public interface OrderDetailsRepository extends JpaRepository<OrderDetails, Integer> {
     List<OrderDetails> findByPizzaId(Integer id);
     List<OrderDetails> findByOrderId(Integer id);
+
 }
